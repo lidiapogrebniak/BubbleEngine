@@ -7,6 +7,11 @@ public class Bubble {
 	private BubbleColor color;
 	
 	private boolean toDelete;
+	
+	public Bubble(BubbleColor color)
+	{
+		this.color = color;
+	}
 
 	public boolean isToDelete() {
 		return toDelete;

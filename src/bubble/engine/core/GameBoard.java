@@ -20,20 +20,50 @@ public class GameBoard {
 			return;
 		}
 		
-		Set<String> myHashSet = new HashSet<String>();
+		Set<BubbleCoordinate> myHashSet = new HashSet<BubbleCoordinate>();
 		
-		if(--baseX>=0)
-		{
-			return; //findNeighbours
-		}
+		findNeighbors(baseX, baseY, currentBubble.getColor(), myHashSet);
 	}
 	
-	public void findNeighbors(int baseX, int baseY, BubbleColor color)
+	public void findNeighbors(int baseX, int baseY, BubbleColor color, Set<BubbleCoordinate> myHashSet)
 	{
 		Bubble currentBubble = board[baseX][baseY];
-		if(currentBubble == null || currentBubble.getColor() != color)
+		if(currentBubble == null || currentBubble.getColor() != color || currentBubble.isToDelete())
 		{
 			return;
+		}
+		
+		System.out.println("X="+baseX+"Y="+baseY);
+		
+		myHashSet.add(new BubbleCoordinate(baseX, baseY));
+		currentBubble.setToDelete(true);
+		
+		int curX = baseX - 1;
+		int curY = baseY;
+		if(curX > -1)
+		{
+			findNeighbors(curX, curY, color, myHashSet);
+		}
+		
+		curX = baseX;
+		curY = baseY - 1;
+		if(curY > -1)
+		{
+			findNeighbors(curX, curY, color, myHashSet);
+		}
+		
+		curX = baseX + 1;
+		curY = baseY;
+		if(curX < maxX)
+		{
+			findNeighbors(curX, curY, color, myHashSet);
+		}
+		
+		curX = baseX;
+		curY = baseY + 1;
+		if(curY < maxY)
+		{
+			findNeighbors(curX, curY, color, myHashSet);
 		}
 	}
 	
